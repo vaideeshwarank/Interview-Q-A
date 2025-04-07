@@ -1,0 +1,52 @@
+#main.tf
+
+terraform {
+    required_providers {
+        "azurerm" = {
+            source = "hashicorp/azurerm"
+            version = "3.0.0"
+        }
+    }
+
+    backend "azurerm" {
+        resource_group_name= "tfstarg"
+        storage_account_name = "tfsta"
+        container_name = "tfblobcontainer"
+        key = "terraform.tfstate"
+    }
+}
+
+provider "azurerm" {
+    features {}
+}
+
+resource "azurerm_resource_group" "aksrg" {
+    name = "sampleaksrg"
+    location = "westus2"
+}
+
+resource "azurerm_kubernetes_cluster" "akscluster" {
+    name = "sampleakscluster"
+    location = azurerm_resource_group.aksrg.location
+    resource_group_name= azurerm_resource_group.aksrg.name
+    kubernetes_version = 1.30.3
+    dns_prefix = "sampleaksclusterdns"
+
+    default_node_pool {
+        name = "systemnodepool"
+        vm_size = "standard_f4s_v2"
+        node_count = 1
+    }
+
+    identity {
+        type  = "systemassigned"
+    }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "appnode" {
+    name = "appnode"
+    node_count= 2
+    vm_size = "standard_f16s_v2"
+    mode = "user"
+    kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
+} 

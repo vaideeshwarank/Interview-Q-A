@@ -1,0 +1,200 @@
+2) Python
+--cloud libraries--> boto3 for AWS and azure.identity, azure.mgmt.resource for Azure
+--what are the various modules you have used in Python--> pandas for excel work, subprocess for azureCLI, openpyxl for excel formatting and coloring
+
+programs to practice:
+1) what is try catch
+try:
+    int(input('provide an integer'))
+except:
+    print('that is not an integer')
+--what the various exceptions/errors you faced in python
+--swap dictionary values:
+input_dict={'a':'apple','b':'ball','c':'cat','d':'dog'}
+output_dict={}
+for i,k in input_dict.items():
+    output_dict[k]= i
+print(output_dict)
+
+2) sum of 2 numbers
+3) reverse a string
+4) Python program to check if a string is a palindrome
+def reversestring(string):
+    return string [::-1]
+a=input("enter the string:")
+b= reversestring(a)
+if a == b:
+    print("string is palindrome")
+else:
+    print("string is not palindrome")
+-------------
+a=input("enter string:")
+b=""
+for x in a:
+    print(x)
+    b = x+b
+print(b)
+
+5) reverse a dictionary
+6) python program to search for a file and Create the File If Not Exists
+import os
+filename="test4.log"
+if os.path.exists(filename):
+    print("file already exisits")
+else:
+    with open (filename, 'w') as file:
+        file.write("")
+    print("created a new file")
+
+7) python code to create a folder if not exists already:
+import os
+if not os.path.exists('VAIDEESHDOLDER'):
+    os.makedirs('VAIDEESHDOLDER')
+8) python code to get current date time and 10 days back date time:
+import datetime
+now = datetime.datetime.now()
+nowten=datetime.timedelta(days=10)
+a= now-nowten
+print(now)
+print(a)
+9) python program to print file modified time:
+import datetime
+import os
+filename="test4.log"
+nowtime=datetime.datetime.now()
+print("current time is:",nowtime)
+mod1=os.path.getmtime(filename)
+mod2=datetime.datetime.fromtimestamp(mod1)
+print("file modified time is:",mod2)
+10) python program to move .log files more than 100 days old:
+import os
+import datetime
+import shutil
+log_directory = r"d:\PLEXOS_Automation\vaideesh"
+archive_directory = r"d:\PLEXOS_Automation\vaideesh\archive"
+threshold_date = datetime.datetime.now() - datetime.timedelta(days=10) 
+print(threshold_date)
+for filename in os.listdir(log_directory):
+    if filename.endswith(".log"):
+        filemodifiedtime=datetime.datetime.fromtimestamp(os.path.getmtime(filename))
+        print("filename is:",filename,"file modified time is:",filemodifiedtime)
+        if filemodifiedtime > threshold_date:
+            shutil.move(filename, archive_directory)
+            print(f"Moved: {filename} → {archive_directory}")
+print("Log cleanup completed.")
+
+11) python program to list azure subscriptions, resource groups within the subscription, resources within each resource group.
+
+#listsubrgresource
+from azure.identity import DefaultAzureCredential
+from azure.mgmt.resource import SubscriptionClient, ResourceManagementClient
+
+credential=DefaultAzureCredential()
+subclient=SubscriptionClient(credential)
+
+sublist=subclient.subscriptions.list()
+for i in sublist:
+    print ("Subscription ID id:", i.subscription_id, "subscription name is:", i.display_name)
+
+    rgclient=ResourceManagementClient(credential, i.subscription_id)
+    rglist=rgclient.resource_groups.list()
+    for j in rglist:
+        print ("Resource group name is:", j.name,"Resource group loation is:", j.location)
+
+        resourcelist=rgclient.resources.list()
+        for f in resourcelist:
+            print ("resource name is:", f.name, "type:", f.type, "location:", f.location)
+
+print ("end")
+
+12) python program to check url and print output:
+import requests
+
+url = "https://www.google.com"
+response = requests.get(url)  # Send GET request
+print(f"Status Code: {response.status_code}")  # Print HTTP status code
+print(f"Response Body:\n{response.text}") 
+
+13) program to generate bearer token with clienID and secret and print bearer token:
+import requests
+# Function to generate bearer token
+def generate_bearer_token(client_id, client_secret, token_url):
+    payload = {
+        "credential_type": "client_credentials",
+        "client_id": client_id,
+        "client_secret": client_secret
+    }
+    response = requests.post(token_url, data=payload)
+    if response.status_code == 200:
+        data = response.json()
+        access_token = data.get("access_token")
+        print(access_token)
+        return access_token
+    else:
+        print("Failed to generate bearer token")
+        return None
+
+client=""
+secret=""
+url=r"n"
+generate_bearer_token(client,secret,url)
+
+14) python program to count and return the number of occurances in a dictionary:
+city_info = [
+    {'pop': '110', 'state': 'Texas', 'city': 'Austin'},
+    {'pop': '120', 'state': 'California', 'city': 'LA'},
+    {'pop': '130', 'state': 'Texas', 'city': 'Dallas'},
+    {'pop': '140', 'state': 'California', 'city': 'SF'},
+    {'pop': '150', 'state': 'Washington', 'city': 'Seattle'}
+]
+#expected output: Texas:2, California:2, Washington:1
+
+city_counter = {}
+for i in city_info:
+    print(i)
+    state = i['state']
+    print(state)    
+    if state in city_counter:
+        city_counter[state] += 1  # Increment count if state already exists
+    else:
+        city_counter[state] = 1   # Add state with count 1 if not present
+
+print(city_counter)
+
+
+--different data types in Python
+Numeric – int, float
+Sequence Type – string, list, tuple
+Mapping Type – dict
+Boolean – bool
+--Tuple vs list vs dictionary
+list--> just a list of items which can later be modified or appended.
+m_data_list = [23, 45, 12, 67, 34]
+data.append(89)  # Add an item
+data.remove(45)  # Remove an item
+tuple--> list of items that cannot be modified or append anything, used for storing data that should not change throughout the program, such as configuration settings, constants, or fixed data points.
+my_tuple = (1, 2, 2, 3, 4, 4, 5)
+dictionary-->its a key value pair
+json_data = '{"name": "Alice", "age": 25, "city": "New York"}'
+
+1) how will you add 2 lists:
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+list3 = list1 + list2
+print(list3)  # Output: [1, 2, 3, 4, 5, 6]
+
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+list1.extend(list2)
+print(list1)  # Output: [1, 2, 3, 4, 5, 6]
+
+2) add values in a list:
+my_list = [1, 2, 3]
+my_list.append(4)
+print(my_list)  # Output: [1, 2, 3, 4]
+
+my_list.append("hello")
+print(my_list)  # Output: [1, 2, 3, 4, 'hello']
+
+my_list.append([5, 6])
+print(my_list)  # Output: [1, 2, 3, 4, 'hello', [5, 6]]

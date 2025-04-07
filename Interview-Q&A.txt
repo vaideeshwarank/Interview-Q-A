@@ -1,0 +1,398 @@
+ 
+docker
+shell
+github
+powershell
+arm
+az bicep  modules
+config mgmt- chef,ansible alternative
+svc -k8s- ingress
+azure containers
+
+Kubernetes service AKS, Azure Container Instances ACI, Azure Service Fabric, Azure App Service containerization, Azure Red Hat Openshift ARO, Azure Spring Cloud, Azure Batch, Azure Container Registry ACR  Experience in YAML manifests HELM charts ARM Template script ion for application deployment
+ 
+ssl certs
+ 
+nginx ingress controller
+ 
+ACI is a serverless container service suitable for short-lived tasks, batch jobs, or microservices that require rapid scaling and on-demand resource allocation.
+ 
+AKS is a managed Kubernetes service suitable for production workloads, long-running services, and complex applications that require advanced orchestration, scaling, and management capabilities.
+ 
+webhook
+ 
+istio - service mesh
+ 
+custom resource definition - operator
+ 
+how
+docker registry service connection
+dotnet restore - DotNetCoreCLI
+dotnet build - DotNetCoreCLI
+NuGetAuthenticate -nuget service connections
+dotnet test -DotNetCoreCLI
+dotnet publish - DotNetCoreCLI
+PublishPipelineArtifact
+ 
+ 
+nuget authenticate
+service connection
+dotnet test
+dotnet publish
+publishpipeline artifact
+ 
+what is dogpile effect
+ 
+how does micro-services talk to each other
+ 
+deployment rollback automation
+ 
+what does grafana monitor - how its monitoring
+ 
+git commands- logstash
+ 
+vnet peering
+connect vnet from 2 subscriptions
+security practices while running IAC / kubernetes
+AKS Architecture - k8s architecture
+ 
+disaster recovery
+failover
+ 
+19. There are eight commits in the ‘develop’ branch, and one of those commits needs to be pushed into the ‘release’ branch. How would you approach this?
+The best way to approach this is by using git cherry-pick. This is the act of picking a commit from a branch and applying it to another.
+ 
+You can do this on the Azure DevOps platform by clicking on the specific commit, and when directed to the commit, in the top right corner, there will be 3 dots in which you can click, and there will be an option called ‘Cherry-picking’. It will then ask you to select the ‘target branch’, which in this case is the ‘release’ branch. It will then create a pull request in the ‘release’ branch for that commit.
+ 
+20. Your team is deciding whether to go ahead with Microsoft-hosted agents or self-hosted agents in Azure pipelines, with specific software requirements and performance being at the top of their list. Which would you recommend and why?
+Self-hosted agents would be my recommendation because they provide flexibility when it comes to installing required software, tools, and versions that cater to the project, which caters to the specific software requirements factor. You also have complete control over the environment, allowing you to configure it to your project's requirements.
+ 
+The other factor was performance, which self-hosted agents have a higher performance advantage with projects that have complex builds. This leads to faster build times and a more effective utilization of resources. These two factors are limited when it comes to Microsoft-hosted agents.
+---------------------------------------------------------------------------------------
+QUESTIONS
+what is SSL/TLS/ https/ how do you obtain a certificate ? 
+what is lb, service bus , how's the conn bw service bus and k8s cluster is secure ? 
+how the tenant is not able to access other tenant's data ?
+ingress contoller ?
+reverse proxy ?
+forward proxy ?
+how do you run an application in a windows VM / linux VM? what are needed? 
+how to do performance optimization ?
+database indexing?
+hows the database is secure ?
+hows the DR been setup ? how would you setup ?
+how the routing happens when the disaster occurs ?
+how to setup a failover mechanism ?
+how to setup security for a service? what are the security measures / policies you would take ?
+
+====================================================================================================
+1) Terraform
+ARM vs Terraform
+issues faced in terraform
+
+====================================================================================================
+StatefulSets:
+Purpose:
+Manage sets of identical pods that require persistent storage, stable identities, and ordered deployment and scaling. 
+Key Features:
+Persistent Storage: Each pod in a StatefulSet has its own persistent volume, ensuring data is retained even if a pod is deleted or rescheduled. 
+Stable Identities: Pods retain a unique identity (e.g., pod-0, pod-1) even after restarts or rescheduling. 
+Ordered Deployment and Scaling: Pods are created, scaled, and updated in a specific order, ensuring that dependencies are met. 
+Use Cases:
+Databases (e.g., MySQL, MongoDB), message brokers (e.g., Kafka), and other applications that require persistent data and stable identities.
+***********************************************************
+What is the branching strategy you follow?
+GIT flow:
+Gitflow is a branching model in Git that uses multiple branches to manage code development and releases, particularly useful for teams with scheduled release cycles and a need to define features as releases. 
+
+Here's a breakdown of Gitflow:
+Key Branches:
+main (or master):
+Represents the production-ready code, the codebase that is deployed to users.
+develop:
+Serves as the integration branch for the next release, where feature branches are merged after completion.
+feature:
+Branches off develop for developing new features, and are merged back into develop once completed.
+release:
+Branched off from develop to prepare for a release, where final adjustments (bug fixes, documentation) are made.
+hotfix:
+Branched off from main to address urgent production issues, merged back into main and develop. 
+
+Workflow:
+1. Feature Development:
+Developers create a feature branch from develop, implement their feature, and merge it back into develop after completion.
+2. Release Preparation:
+When a set of features is ready for release, a release branch is created from develop, where final preparations are made.
+3. Release:
+The release branch is merged into main and tagged with a version number, then merged back into develop to ensure that any changes made in the release branch are not lost.
+4. Hotfix:
+For urgent production issues, a hotfix branch is created from main, the fix is implemented, and the branch is merged back into main and develop.
+
+====================================================================================================
+3) Azure DEvops
+security tools used in Devops
+self hosted vs azure hosted agents
+how is YAML used in Azure pipelines
+what are the major components in Azure Devops
+Azure Boards for work tracking, Azure Repos for version control, Azure Pipelines for continuous integration and continuous delivery (CI/CD), Azure Test Plans for testing, and Azure Artifacts for package management.
+
+4) Azure infra 
+Load Balancer vs API gateway
+Azure traffic manager--> DNS based load balancer
+private endpoint
+VPN Peering--> site to site, point to site
+
+In point-to-site, you have to connect to the network you want to access manually. Usually, if you log-off or restart the workstation it loses connection, and you have to reconnect every time. It's common to use this type of VPN when we are working remotely, and we need to access our company assets. The channel is bi-directional, but it's 1-to-many.
+
+Site-to-site is used when you want to connect two networks and keep the communication up all the time. It's also bi-directional, but it's many-to-many and stays up no matter if your server/workstation is running or not because the connection is established through a network gateway and not from the computer operating system.
+
+In Azure, the Virtual Network Gateway is the platform providing both functionalities. You can configure site-to-site to connect to your customer network. If this network is not running in Azure, they usually have an appliance to establish dedicated tunnels. As long as it supports IPsec IKE, you are good to go.
+
+If you are using the VM in Azure as a workstation, then point-to-site may be enough, but if your application needs to get data from the customer database automatically with or without someone logged in the VM, then site-to-site is a better approach.
+
+5) Azure security
+Azure Firewall, Sentinel, NSG, WAF, VPN
+
+6) SQL
+what are the basic in SQL
+
+====================================================================================================
+
+1) what the different types of file extensions in terraform?
+2) what is state locking? and why is it useful?
+3) what are modules? have you written custom modules from scratch?
+4) why shouldnt we store statfiles in version control and why should we store in azure storage account?
+5) what are issues you faced while working with terraform?
+6) what is state file and what is its significance?
+7) have you provisioned entire azure infrastructure with terraform?
+8) what are workspaces? how to use same code for different envs like dev, staging and prod?
+9) what are the things required to provision AKS with terraform?
+how will you import an existing resource in terraform?
+first write the terraform resource block for the resource and them import using command:
+terraform import resource_namein_code actual_resourceID
+terraform implicit vs exlplicit dependencies?
+how modules can referenced in terraform main files? how are the arugments passed in modules?
+how to lock terraform state file in azure?
+
+1) To handle dependencies between resources in Terraform, you can use the implicit and explicit dependencies mechanisms. Implicit dependencies are automatically inferred by Terraform when resources reference each other in their configurations. For example, if an EC2 instance resource references a VPC resource, Terraform will automatically create the VPC before launching the EC2 instance.
+
+2) To handle sensitive information securely in Terraform, it is recommended to use a secrets management tool or service, such as HashiCorp Vault or AWS Secrets Manager. These tools allow you to store and retrieve secrets securely and integrate them into your Terraform configuration.
+
+3) To detect and remediate infrastructure drift with Terraform, you can leverage Terraform's "terraform plan" and "terraform apply" commands in a CI/CD pipeline or a scheduled job. After running "terraform apply," you can capture the execution plan and compare it against the last known state using Terraform's state management features.
+
+4) To manage multi-cloud environments with Terraform, you can utilize Terraform's support for multiple cloud providers. By configuring provider blocks for each cloud provider, you can define resources specific to each provider within the same Terraform configuration file.
+Terraform will manage the provisioning and management of resources across different cloud providers simultaneously. This allows you to create and manage resources in AWS, Azure, and GCP within a unified Terraform workflow, providing consistent infrastructure management across multiple clouds.
+
+5)  To manage existing resources with Terraform, you can use Terraform's import command. The import command allows you to import existing resources into your Terraform state file, enabling Terraform to manage them going forward.
+By specifying the resource type and identifier, you can import resources individually or in bulk. Once imported, you can define the desired configuration in your Terraform configuration file and use Terraform commands like plan, apply, and destroy to manage the resources' lifecycle consistently.
+
+10)what is azure functions? how you worked on it?
+11)what is Azure firewall?
+12)are you using both nginx ingress controller and application gateway in your infra?
+13)what is waf and how it can implemented in azure?
+14)explain the components in kubernetes
+15)how will you troubleshoot scheduling issues?
+what the is the networking plugin (driver) you use in AKS?-->
+we can use Container Network Interface (CNI) plugins for cluster networking. BY default, AKS provide Azure CNI.
+A CNI plugin is required to implement the Kubernetes network model- which is essential to enable pod communications, services, network policies. 
+
+CoreDNS vs CNI:
+CoreDNS
+CoreDNS is the DNS server used in Kubernetes for service discovery.
+It helps resolve internal service names (e.g., my-service.default.svc.cluster.local) to their respective pod IPs.
+Runs as a Kubernetes deployment and is configured using a ConfigMap.
+Supports features like caching, forwarding, and custom plugins.
+Essential for Kubernetes networking, but it does not handle actual network traffic routing.
+
+CNI (Container Network Interface)
+CNI is responsible for networking in Kubernetes.
+It provides IP addresses to pods and manages communication between them.
+Different CNI plugins exist, such as Flannel, Calico, Cilium, Weave, etc.
+A CNI plugin ensures pods can communicate across nodes by handling routing, firewall rules, and network policies.
+Required for Kubernetes networking to function properly.
+
+How They Work Together
+When a pod wants to communicate with another pod using a service name, CoreDNS resolves the service name to an IP address.
+The CNI plugin then ensures the traffic reaches the correct pod by handling networking between nodes and pods.
+
+what is the CSI plugin (file.csi.azure.com) you use in AKS?
+Container Storage Interface (CSI) are used for storage in PVs. CSI is a standard that helps provide drivers as an extension to expose arbitrary block and file storage systems to containerized workloads on Kubernetes, and establish connectivity between storage systems and Kubernetes.
+
+16)what is the difference between self hosted and azure managed agent? what are the advantaged of using self hosted agent?
+17)how is the self hosted agent authenticated with azure devops?
+18)what is the branching strategy you use?
+19)why do you use classic pipelines for release and yaml pipelines for build?
+20)how to run terraform in azure devops?
+
+====================================================================================================
+1) how to track changes in git without using git cli commands, interviewer wanted me to answer on .git folder where all the changes are tracked. Explain more on this where can I check?
+Git tracks all changes inside the .git folder, which is a hidden directory in every Git repository. It contains several important components:
+
+objects/ → Stores commits, trees, and blobs (actual file data).
+refs/ → Tracks branches and tags.
+logs/ → Keeps track of all actions performed (e.g., commits, checkouts).
+index (Staging Area) → Stores changes before they are committed.
+HEAD → Points to the latest commit in the current branch.
+✅ Where to Check?
+
+Open .git/ in the repository directory.
+Look at .git/logs/HEAD to see commit history.
+Look at .git/refs/heads/ to see branch pointers.
+✅ Answer for Interviews:
+"Git tracks changes in the .git folder, where all commits, branches, and objects are stored. The .git/logs/HEAD file maintains the history of actions. The .git/index file represents the staging area, and .git/refs/heads/ tracks branch pointers."
+
+2) will git conflicts occurs in same branch or can it happen with different branches as well?
+Git conflicts can occur in both same branch and different branches:
+
+✅ Conflicts in the Same Branch:
+
+Happens when multiple people edit the same file and push changes.
+Example: Two developers commit to main, but the second developer must pull before pushing.
+✅ Conflicts in Different Branches:
+
+Occurs during merging or rebasing.
+Example: A feature branch modifies file1.txt, and develop also modifies file1.txt. Merging feature into develop results in a conflict.
+✅ Answer for Interviews:
+"Git conflicts can happen in both the same branch and different branches. In the same branch, conflicts occur when multiple contributors push conflicting changes. Across branches, conflicts arise during merges or rebases when two branches modify the same part of a file."
+
+3) dockerfile - run vs cmd vs entrypoint
+RUN: Executes a command during image build, creating a new layer in the image.	this stage runs at container build time.
+CMD: Defines the default command executed when a container starts. this stage runs at container run time. CMD Specifies a default command and/or arguments that can be overridden when running the container. If docker run is executed with a command, the CMD instruction is ignored.
+ENTRYPOINT: ENTRYPOINT ["dotnet", "app.Web.dll"] . Specifies the main command to be executed, and it is not ignored when arguments are passed to docker run. Instead, these arguments are appended to the ENTRYPOINT instruction.
+
+
+4) explain more on base image in dockerfile and when the container is run, which OS will be used? does docker have its own kernel?
+A base image is the foundation for a Docker container. It can be:
+
+Official images like ubuntu, alpine, or node.
+Custom images built from scratch.
+✅ Example of Base Image:
+
+FROM ubuntu:20.04  # Ubuntu is the base image
+RUN apt-get update && apt-get install -y nginx
+CMD ["nginx", "-g", "daemon off;"]
+
+Which OS Will Be Used in a Container?
+The OS inside the container is based on the base image (e.g., if using ubuntu, the container will have Ubuntu userspace).
+Docker does not include a full OS kernel, only the necessary libraries.
+
+Does Docker Have Its Own Kernel?
+No, Docker does not have its own kernel.
+Docker containers share the host machine's Linux kernel but run their own isolated user-space.
+
+✅ Answer for Interviews:
+"A base image provides the foundation for a Docker container. The container uses the OS from the base image but shares the host machine's kernel. Docker does not have its own kernel; it relies on the host system."
+5) what do you mean by docker containers are platfor independent.
+"Docker containers are platform-independent because they package the application and dependencies, ensuring consistency across different environments. They run the same way on any OS that supports Docker, as they share the host machine's kernel."
+
+6) How Does a Containerized .net App Run on Windows, macOS, or Linux?
+"Our production .NET app runs on Kubernetes with Ubuntu nodes because we use Linux-based .NET container images. The .NET SDK (from mcr.microsoft.com/dotnet/sdk:8.0) builds the application, and the .NET runtime (mcr.microsoft.com/dotnet/aspnet:8.0) runs the application inside a Linux container. Since .NET is cross-platform, it runs natively on Linux worker nodes in Kubernetes without any Windows dependencies."
+
+7) docker container runtime:
+A Docker runtime, often called a container runtime, is the software that executes and manages containers, acting as the low-level engine for running containerized applications.
+The container runtime interacts with the host operating system's kernel to provide necessary resources and isolation for containers. 
+in AKS, CRIO is the runtime used.
+
+
+====================================================================================================
+
+1) Git Branching strategy
+2) Git merge vs git rebase vs git squash commit
+3) git rebase vs git cherry-pick vs git stash
+4) how to resolve git merge conflicts
+
+
+1) git merge--> merge or copy all the changes from 1 branch to another like copy all changes from feature1 branch to release branch.
+command: git merger source-branch to dest-branch
+2) git rebase--> merge commits from 1 branch to another branch. Ex: when there are 2 new commits in feature1 branch and 2 new commits in master branch, then with git rebase we can merge the 2 new new commits in feature1 branch to the position after the 2 new commits in master branch.
+command: git rebase source-branch to dest-branch
+3) git cherry-pick--> used in cases where a specific commit needs to be merged from 1 branch to another. 
+command: git cheryy-pick commitID
+4) git stash--> used to save all local changes to stage and not commit to any branch. by using this developer can work on other new  changes required and came back later to work on the staged changes.
+command: git stash--> to stage all local changes
+         git stash list --> to list staged changes
+		 git stash pop stashID--> to bring up the staged changes so that the developer can work
+====================================================================================================
+EPAM round 1:
+1) what are the best practices to follow in docker file?
+2) do you run the docker commands in sudo mode? do you run the docker commands in elevated privilege mode?
+3) best practices to follow in terraform? and in terms of security best practices as well.
+4) terraform import problems. how do you manage the naming convention of imported resources?
+5) do you know how to manage ansible in terraform?
+6) do you know to re-use templates in azure devops?
+7) what is minimum gate conditions for security checks in azure devops? like what is the minimum pass creteria you will define that the docker image scan or the cose scan report should pass through?
+8) what are provisioners? will state file track a resource if you provision it through local provisioner? --> answer is no
+9) what is  RPO and RTO?
+10) write a python program to make an restAPI call, get the result and look for a key value in the JSON output.
+
+EPAM round 2:
+1) what are parent, child, nested module? can we write nested modules in terraform?
+2) write a best practice terraform folder structure. write modules and write main.tf to call these modules.
+3) what is ssl and what does an ssl contain? what is public key and private key?
+4) what is Azure CNI vs Azure CNI overlay vs kubenet?
+5) how can we manage all the azure virtual desktops with azure? --> we can use ansible or if it has to be azure then we can use azure automation.
+6) write a python program to delete only the files in a container, it should delete the storage account and should not delete the container itself.
+7) what is the braching strategy you follow? scenario based git stash question. 
+8) there are 3 nodes, and 1 new microservice with 3 replicas. how will the scheduling happen? pods can into any node that has space to accomodate these pods. each pods can go in to 3 difference nodes also.
+9) what is the difference between AKS public clusters vs private cluster? what are all needed to provision a private AKS cluster?
+10)how can we minimize or have no downtime while upgrading AKS versions?
+====================================================================================================
+Hitachi Energy round 1:
+1) write terraform structure.
+2) what is main.tf, why is it needed? 
+3) what is backend and why is it needed?
+4) if you want to upgrade the azurerm version for only 1 particular resource, how would you apprach it?
+5) what would happen if you upgraded the azurerm for all the resources?
+6) what is terraform drift and how would you manage is there is a drift while running terraform in azure pipeline?
+7) what are the best practices to avoid terraform drift?
+8) write a docker file. 
+9) what is ENTRPOINT in the dockerfile? instead of app.dll, can we pass app.exe? can we run this in linux VM if we use app.exe?
+10) write command to create a docker container using this dockerfile.
+11) write command to push this docker container to docker registry.
+12) what is docker? difference between docker and kubernetes.
+13) why do we need kubernetes? what is microservice architecture?
+14) write all the files needed to deploy this container in kubernetes.
+15) write deployment.yaml, service.yaml, ingress.yaml.
+16)what is pv? what is statefull and stateless in kubernetes?
+17)RWO vs RWM in terms of volumes?
+18)differnece between public and private AKS clusters.
+19)explain complete CICD process.
+20)explain the git strategy you follow.
+21) write a few kubectl commands.
+
+====================================================================================================
+Questions:
+1) what is the branching strategy that you follow?
+2) what merging strategy do you use? do use all the strategies or is it like a strategy is fixed for an organization and all the developers should follow the same strategy?
+3) have you faced git conflict issues, if so how often? do you resolve all the conflicts or is it handled by developers?
+4) when do you merge changes from feature/develop branch to release branches and then from release to master branches?
+5) why we do use both yaml and classic pipelines? why do we have classic pipelines for release pipelines?
+6) what is Linting in devops pipelines?
+7) why do we use both azure hosted and self hosted agents? CLI pipelines use azure hosted agent, why ?
+8) what are the scanning tools you have used in azure devops? explain in detail.
+9) why do you push the artifacts and why cant we simply create docker conatainers and push it to repository?
+====================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
